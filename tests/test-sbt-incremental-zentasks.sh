@@ -4,8 +4,11 @@
 #
 set -o nounset -o errexit
 
+source tests/common.sh
+set_sedi
+
 test_change1() {
-  sed -i '' '/def index = IsAuthenticated { username => _ =>/ a\
+  $sedi '/def index = IsAuthenticated { username => _ =>/ a\
   val changed = true
 ' app/controllers/Projects.scala
   echo ""
