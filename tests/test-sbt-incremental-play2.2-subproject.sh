@@ -40,6 +40,11 @@ test() {
   test_change2
 }
 
+setincOptions() {
+  local file=$1
+  echo -e "\n\nincOptions := incOptions.value.withNameHashing(true)\n" >> "$file"
+}
+
 run() {
   local current_time=`date +%Y%m%d-%H%M%S`
   local tmp_dir="/tmp/$current_time"
@@ -53,9 +58,10 @@ run() {
   test "0.13.0"
 
   git reset --hard --quiet
-  echo "" >> build.sbt
-  echo "" >> build.sbt
-  echo "incOptions := incOptions.value.withNameHashing(true)" >> build.sbt
+  setincOptions build.sbt
+  setincOptions modules/api/build.sbt
+  setincOptions modules/common/build.sbt
+  setincOptions modules/manager/build.sbt
   test "0.13.2-M1"
 }
 
