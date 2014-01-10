@@ -4,8 +4,13 @@
 #
 set -o nounset -o errexit
 
+source tests/common.sh
+set_sedi
+
 test_change() {
-  sed -i '/object Registration extends Controller {/ a \ \ val changed = true' app/securesocial/controllers/Registration.scala
+  $sedi '/object Registration extends Controller {/ a\
+  val changed = true
+' app/securesocial/controllers/Registration.scala
   echo ""
   echo "After change to controller"
   git diff
