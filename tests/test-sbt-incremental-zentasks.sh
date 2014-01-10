@@ -5,7 +5,9 @@
 set -o nounset -o errexit
 
 test_change1() {
-  sed -i '/def index = IsAuthenticated { username => _ =>/ a \ \ val changed = true' app/controllers/Projects.scala
+  sed -i '' '/def index = IsAuthenticated { username => _ =>/ a\
+  val changed = true
+' app/controllers/Projects.scala
   echo ""
   echo "After change to controller"
   git diff
