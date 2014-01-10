@@ -47,6 +47,5 @@ run() {
 repository="https://github.com/jaliss/securesocial.git"
 commit="9979432063f30cc7c27c3ec792abbf3aad224ab2"
 project_subdir="module-code"
-SBT_OPTS="-Dsbt.log.noformat=true"
 
 run

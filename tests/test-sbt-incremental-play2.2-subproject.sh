@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# Tests sbt 0.13.2.M1 incremental compilation with zentasks project.
+# Tests sbt 0.13.2.M1 incremental compilation with play2.2-subproject project.
 #
 set -o nounset -o errexit
 
 test_change1() {
-  sed -i '/def index = IsAuthenticated { username => _ =>/ a \ \ val changed = true' app/controllers/Projects.scala
+  sed -i '/public static Result index() {/ a \ \ \ \ \ \ \ \ ExampleLogger.log("changed");' modules/manager/app/controllers/html/StaticPages.java
   echo ""
   echo "After change to controller"
   git diff
@@ -14,7 +14,7 @@ test_change1() {
 }
 
 test_change2() {
-  echo "GET /changed controllers.Projects.index" >> conf/routes
+  echo "GET /changed controllers.html.StaticPages.index()" >> modules/manager/conf/manager.routes
   echo ""
   echo "After change to routes"
   git diff
@@ -25,6 +25,8 @@ test_change2() {
 test() {
   local version=$1
   echo "sbt.version=$version" > project/build.properties
+
+  sed -i 's/2.2.0/2.2.1/' project/plugins.sbt
 
   echo ""
   echo "********** Testing with `cat project/build.properties` **********"
@@ -45,18 +47,17 @@ run() {
   git clone --quiet "$repository" repo
   cd repo
   git checkout --quiet "$commit" > /dev/null
-  cd "$project_subdir"
 
-  test "0.13.1"
+  test "0.13.0"
 
   git reset --hard --quiet
+  echo "" >> build.sbt
   echo "" >> build.sbt
   echo "incOptions := incOptions.value.withNameHashing(true)" >> build.sbt
   test "0.13.2-M1"
 }
 
-repository="https://github.com/playframework/playframework.git"
-commit="4db4de7e9d35d1b9aea5c1f27cefbde025a7db8f"
-project_subdir="samples/scala/zentasks"
+repository="https://github.com/cnicodeme/play2.2-subproject.git"
+commit="dbeac165ef39ceed4f2243156fd8b88eed37c235"
 
 run

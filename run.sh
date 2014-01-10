@@ -13,3 +13,4 @@ test() {
 
 test securesocial
 test zentasks
+test play2.2-subproject
