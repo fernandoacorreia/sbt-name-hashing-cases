@@ -5,7 +5,9 @@
 set -o nounset -o errexit
 
 test_change1() {
-  sed -i '/public static Result index() {/ a \ \ \ \ \ \ \ \ ExampleLogger.log("changed");' modules/manager/app/controllers/html/StaticPages.java
+  sed -i '' '/public static Result index() {/ a\
+      ExampleLogger.log("changed");
+' modules/manager/app/controllers/html/StaticPages.java
   echo ""
   echo "After change to controller"
   git diff
@@ -26,7 +28,7 @@ test() {
   local version=$1
   echo "sbt.version=$version" > project/build.properties
 
-  sed -i 's/2.2.0/2.2.1/' project/plugins.sbt
+  sed -i '' 's/2.2.0/2.2.1/' project/plugins.sbt
 
   echo ""
   echo "********** Testing with `cat project/build.properties` **********"

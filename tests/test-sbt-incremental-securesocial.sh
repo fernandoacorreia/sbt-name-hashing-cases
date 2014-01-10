@@ -5,7 +5,9 @@
 set -o nounset -o errexit
 
 test_change() {
-  sed -i '/object Registration extends Controller {/ a \ \ val changed = true' app/securesocial/controllers/Registration.scala
+  sed -i '' '/object Registration extends Controller {/ a\
+  val changed = true
+' app/securesocial/controllers/Registration.scala
   echo ""
   echo "After change to controller"
   git diff
