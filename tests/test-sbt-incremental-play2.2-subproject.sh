@@ -31,7 +31,7 @@ test() {
   local version=$1
   echo "sbt.version=$version" > project/build.properties
 
-  $sedi 's/2.2.0/2.2.1/' project/plugins.sbt
+  $sedi 's/2.2.0/2.2-SNAPSHOT/' project/plugins.sbt
 
   echo ""
   echo "********** Testing with `cat project/build.properties` **********"
