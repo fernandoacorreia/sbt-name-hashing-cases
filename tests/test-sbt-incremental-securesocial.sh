@@ -4,13 +4,21 @@
 #
 set -o nounset -o errexit
 
-source tests/common.sh
-set_sedi
-
 test_change() {
-  $sedi '/object Registration extends Controller {/ a\
-  val changed = true
-' app/securesocial/controllers/Registration.scala
+  git apply - <<EOF
+diff --git a/module-code/app/securesocial/controllers/Registration.scala b/module-code/app/securesocial/controllers/Registration.scala
+index c9f7c1f..c12861b 100644
+--- a/module-code/app/securesocial/controllers/Registration.scala
++++ b/module-code/app/securesocial/controllers/Registration.scala
+@@ -39,6 +39,7 @@ import securesocial.core.IdentityId
+  *
+  */
+ object Registration extends Controller {
++  val changed = true
+ 
+   val providerId = UsernamePasswordProvider.UsernamePassword
+   val UserNameAlreadyTaken = "securesocial.signup.userNameAlreadyTaken"
+EOF
   echo ""
   echo "After change to controller"
   git diff
