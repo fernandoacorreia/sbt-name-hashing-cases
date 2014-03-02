@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Tests sbt 0.13.2.M1 incremental compilation with play2.2-subproject project.
+# Tests sbt 0.13.2-M2 incremental compilation with play2.2-subproject project.
 #
 set -o nounset -o errexit
 
@@ -87,7 +87,7 @@ run() {
   setincOptions modules/api/build.sbt
   setincOptions modules/common/build.sbt
   setincOptions modules/manager/build.sbt
-  test "0.13.2-M1"
+  test "0.13.2-M2"
 }
 
 repository="https://github.com/cnicodeme/play2.2-subproject.git"

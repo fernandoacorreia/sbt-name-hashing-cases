@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Tests sbt 0.13.2.M1 incremental compilation with zentasks project.
+# Tests sbt 0.13.2-M2 incremental compilation with zentasks project.
 #
 set -o nounset -o errexit
 
@@ -65,7 +65,7 @@ run() {
   git reset --hard --quiet
   echo "" >> build.sbt
   echo "incOptions := incOptions.value.withNameHashing(true)" >> build.sbt
-  test "0.13.2-M1"
+  test "0.13.2-M2"
 }
 
 repository="https://github.com/playframework/playframework.git"
