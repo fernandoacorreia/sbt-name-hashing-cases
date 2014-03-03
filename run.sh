@@ -8,7 +8,7 @@ test() {
   local test_name=$1
   local result_file="results/$test_name.txt"
   echo "tail -f $result_file for progress"
-  "tests/test-sbt-incremental-$test_name.sh" > $result_file
+  "tests/test-sbt-incremental-$test_name.sh" | grep -v "^\[info] Resolving" > $result_file
 }
 
 test securesocial

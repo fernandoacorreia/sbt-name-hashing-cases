@@ -1,16 +1,24 @@
 #!/bin/bash
 #
-# Tests sbt 0.13.2.M1 incremental compilation with zentasks project.
+# Tests sbt 0.13.2-M2 incremental compilation with zentasks project.
 #
 set -o nounset -o errexit
 
-source tests/common.sh
-set_sedi
-
 test_change1() {
-  $sedi '/def index = IsAuthenticated { username => _ =>/ a\
-  val changed = true
-' app/controllers/Projects.scala
+  git apply - <<EOF
+diff --git a/samples/scala/zentasks/app/controllers/Projects.scala b/samples/scala/zentasks/app/controllers/Projects.scala
+index 5ffe841..b04b586 100644
+--- a/samples/scala/zentasks/app/controllers/Projects.scala
++++ b/samples/scala/zentasks/app/controllers/Projects.scala
+@@ -19,6 +19,7 @@ object Projects extends Controller with Secured {
+    * Display the dashboard.
+    */
+   def index = IsAuthenticated { username => _ =>
++  val changed = true
+     User.findByEmail(username).map { user =>
+       Ok(
+         html.dashboard(
+EOF
   echo ""
   echo "After change to controller"
   git diff
@@ -57,7 +65,7 @@ run() {
   git reset --hard --quiet
   echo "" >> build.sbt
   echo "incOptions := incOptions.value.withNameHashing(true)" >> build.sbt
-  test "0.13.2-M1"
+  test "0.13.2-M2"
 }
 
 repository="https://github.com/playframework/playframework.git"
